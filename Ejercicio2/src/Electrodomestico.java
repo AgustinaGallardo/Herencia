@@ -9,9 +9,8 @@ public class Electrodomestico {
     private float weight;
     private List<Character> typeOfConsumption;
     private List<String> typeOfColor;
-
+    private List<Electrodomestico> listElec;
     private Scanner sc;
-
     public Electrodomestico() {
 
         sc = new Scanner(System.in);
@@ -28,6 +27,8 @@ public class Electrodomestico {
         typeOfColor.add("BLACK");
         typeOfColor.add("GREY");
         typeOfColor.add("BLUE");
+
+        listElec = new ArrayList<>();
 
     }
 
@@ -133,7 +134,10 @@ public class Electrodomestico {
         float w = sc.nextFloat();
         sc.nextLine();
 
-        Electrodomestico e= new Electrodomestico(price,c,result,w);
+        Electrodomestico e = new Electrodomestico(price,c,result,w);
+        finalPriceConsum(e);
+        finalPriceSice(e);
+        listElec.add(e);
         return e;
     }
 
@@ -142,10 +146,48 @@ public class Electrodomestico {
      * precio. Esta es la lista de precios:
      */
 
-
-
-
-
-
-
+    private Electrodomestico finalPriceConsum(Electrodomestico e){
+        float price = 0;
+        switch (e.getConsum()) {
+            case 'A':
+                price = 1000;
+                break;
+            case 'B':
+                price = 800;
+                break;
+            case 'C':
+                price = 600;
+                break;
+            case 'D':
+                price = 500;
+                break;
+            case 'E':
+                price = 300;
+                break;
+            case 'F':
+                price = 100;
+                break;
+            default:
+                System.out.println("Consumo no válido");
+        }
+        float finalPriceConsum = e.getPrice() + price;
+        e.setPrice(finalPriceConsum);
+        return e;
+    }
+    private Electrodomestico finalPriceSice(Electrodomestico e){
+           float w = e.getWeight();
+           float priceWeight = 0;
+           if(w >= 1 && w <= 19 ){
+               priceWeight = 100;
+           }else if (w >= 20 && w <= 49){
+               priceWeight = 500;
+           }else if (w >= 50 && w <= 79 ){
+               priceWeight = 800;
+           }else if (w >= 80){
+               priceWeight = 1000;
+           }
+           float finalPriceW = e.getPrice() + priceWeight;
+           e.setWeight(finalPriceW);
+           return e;
+    }
 }
