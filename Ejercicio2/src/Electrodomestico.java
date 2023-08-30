@@ -96,7 +96,7 @@ public class Electrodomestico {
      */
 
     private String checkColor(String color){
-        String colorDefault = "white";
+        String colorDefault = "WHITE";
         for (String c:typeOfColor
              ) {
             if(color.equalsIgnoreCase(c)){
