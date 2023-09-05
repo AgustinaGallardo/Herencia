@@ -1,8 +1,12 @@
 public class MotorBoat extends Ship{
-
     private Integer power;
 
     public MotorBoat(Integer power) {
+        this.power = power;
+    }
+
+    public MotorBoat(Integer registration, double eslora, Integer manufacturing, Integer power) {
+        super(registration, eslora, manufacturing);
         this.power = power;
     }
 
@@ -14,8 +18,7 @@ public class MotorBoat extends Ship{
         this.power = power;
     }
 
-    @Override
-    public Integer modulo() {
-        return power;
-    }
+  public double calculateRent(double rent){
+        return rent + power;
+  }
 }

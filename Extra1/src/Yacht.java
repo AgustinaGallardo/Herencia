@@ -7,6 +7,12 @@ public class Yacht extends Ship{
         this.numberOfCabin = numberOfCabin;
     }
 
+    public Yacht(Integer registration, double eslora, Integer manufacturing, Integer power, Integer numberOfCabin) {
+        super(registration, eslora, manufacturing);
+        this.power = power;
+        this.numberOfCabin = numberOfCabin;
+    }
+
     public Integer getPower() {
         return power;
     }
@@ -23,9 +29,7 @@ public class Yacht extends Ship{
         this.numberOfCabin = numberOfCabin;
     }
 
-    @Override
-    public Integer modulo() {
-
-        return power + numberOfCabin;
+    public double calculateRent(double rent){
+        return rent + power + numberOfCabin;
     }
 }
