@@ -84,8 +84,8 @@ public class Rent{
         }
         long diffInMillis = returnDate.getTimeInMillis() - rentDate.getTimeInMillis();
         long days = diffInMillis / (24 * 60 * 60 * 1000); // Convertir milisegundos a días
-        double eslora = ship.getEslora()*10;
-        return ship.calculateRent(days * eslora);
+        double modulo = ship.getEslora()*10;
+        return ship.calculateRent(days * modulo);
     }
      public void createRent() {
      System.out.println("ingrese su nombre");
@@ -93,22 +93,20 @@ public class Rent{
      System.out.println("Ingrese su numero de dni");
      this.setDNI(Integer.parseInt(sc.nextLine()));
 
-         // Ingresar la fecha de alquiler como una cadena
-         System.out.println("Ingrese la fecha de alquiler (en formato dd/MM/yyyy):");
-         String dateString = sc.nextLine();
+             System.out.println("Ingrese la fecha de alquiler (en formato dd/MM/yyyy):");
+             String dateString = sc.nextLine();
 
-         // Convertir la cadena de fecha a un objeto Calendar
-         Calendar rentDate = parseDateStringToCalendar(dateString);
-            this.setRentDate(rentDate);
+             // Convertir la cadena de fecha a un objeto Calendar
+             Calendar rentDate = parseDateStringToCalendar(dateString);
+             this.setRentDate(rentDate);
 
-         System.out.println("Ingrese la fecha que termina el alquiler (en formato dd/MM/yyyy):");
-         String returnDateString = sc.nextLine();
-
-         // Convertir la cadena de fecha a un objeto Calendar
-         Calendar returnDate = parseDateStringToCalendar(returnDateString);
+             System.out.println("Ingrese la fecha que termina el alquiler (en formato dd/MM/yyyy):");
+               String returnDateString = sc.nextLine();
+               Calendar returnDate = parseDateStringToCalendar(returnDateString);
          this.setReturnDate(returnDate);
 
-         System.out.println("Que tipo de barco quiere alquilar");
+         // La fecha ingresada es válida, convertirla a Calendar
+               System.out.println("Que tipo de barco quiere alquilar");
         String rent = sc.nextLine();
         rent = rent.toUpperCase();
         rentShip(rent);
@@ -116,17 +114,35 @@ public class Rent{
 
     // Método para convertir una cadena de fecha en un objeto Calendar
     private Calendar parseDateStringToCalendar(String dateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        /** SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+         Calendar calendar = Calendar.getInstance();
+         try {
+         Date date = sdf.parse(dateString);
+         calendar.setTime(date);
+         return calendar;
+         } catch (ParseException e) {
+         System.out.println("Error al analizar la fecha. Asegúrate de ingresarla en el formato correcto (dd/MM/yyyy).");
+         return null;
+         }
+         */
+        boolean fechaValida = false;
+        Date fecha = null;
         Calendar calendar = Calendar.getInstance();
-        try {
-            Date date = sdf.parse(dateString);
-            calendar.setTime(date);
-        } catch (ParseException e) {
-            System.out.println("Error al analizar la fecha. Asegúrate de ingresarla en el formato correcto (dd/MM/yyyy).");
+        while (!fechaValida) {
+            System.out.print("Ingrese una fecha en formato yyyy-MM-dd: ");
+            String fechaString = sc.nextLine();
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                 sdf.setLenient(false); //verifica que el formato sea valido
+                 fecha = sdf.parse(fechaString);
+                 calendar.setTime(fecha);
+                fechaValida = true; // Si el parsing es exitoso, la fecha es válida
+            } catch (ParseException e) {
+                System.out.println("La fecha ingresada no es válida. Por favor, inténtelo nuevamente.");
+            }
         }
         return calendar;
     }
-
     private void rentShip(String rent) {
         System.out.println("Ingrese la matricula");
         Integer registration = Integer.parseInt(sc.nextLine());
